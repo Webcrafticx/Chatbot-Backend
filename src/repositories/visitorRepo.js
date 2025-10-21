@@ -1,4 +1,4 @@
-const VisitorQuery = require("../models/VisitorQuery");
+const VisitorQuery = require("../models/visitorQuery");
 
 class VisitorRepo {
    static async create(data) {
