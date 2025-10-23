@@ -28,6 +28,11 @@ const chatBotSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    socialLinks: {
+    facebook: { type: String, default: "" },
+    instagram: { type: String, default: "" },
+    youtube: { type: String, default: "" }
+  },
     createdAt:{
         type: Date,
         default: Date.now
