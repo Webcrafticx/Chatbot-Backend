@@ -391,6 +391,18 @@
                 },
                 "welcomeMessage": {
                   "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "facebook": {
+                  "example": "any"
+                },
+                "instagram": {
+                  "example": "any"
+                },
+                "youtube": {
+                  "example": "any"
                 }
               }
             }
