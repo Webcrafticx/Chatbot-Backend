@@ -9,5 +9,6 @@ router.post('/:slug/message', chatController.createMessage);
 router.post('/:slug/query', chatController.visitorQuery);
 router.get('/:slug/visitorslist', authMiddleware,chatController.visitorList);
 router.delete('/:slug/visitors/:id', authMiddleware,chatController.deleteVisitor);
+router.put('/:slug/visitor/:id/status', authMiddleware,chatController.updateVistor);
 
 module.exports = router;

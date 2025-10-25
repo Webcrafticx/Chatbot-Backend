@@ -26,7 +26,12 @@ class VisitorRepo {
 
   return { total, count: list.length, data: list };
 }
-
+static async update(id, status) {
+  return await VisitorQuery.findByIdAndUpdate(id,{
+    status: status
+  }, { new: true });
+  
+}
     static async delete(id) {
         return await VisitorQuery.findByIdAndDelete(id);
     }

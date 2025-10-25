@@ -15,6 +15,7 @@ const chatBotSchema = new mongoose.Schema({
     logoUrl: {
         type: String,
     },
+    logoPublicId: String,
     slug: {
         type: String,
         required: true,

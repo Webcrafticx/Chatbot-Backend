@@ -6,8 +6,9 @@ class UserController{
         try{
             const ownerId = req.user._id;
             const {companyName, welcomeMessage, description, facebook, instagram, youtube} = req.body;
-            const logoUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
-            const cb = await chatBotServices.createChatBot({ownerId, companyName, logoUrl, welcomeMessage, description, socialLinks: {facebook, instagram, youtube}});
+            const logoUrl = req.file ? req.file.path : null;
+            const logoPublicId = req.file ? req.file.filename : null;
+            const cb = await chatBotServices.createChatBot({ownerId, companyName, logoUrl, welcomeMessage, description, logoPublicId,socialLinks: {facebook, instagram, youtube}});
             res.status(201).json({status: true, message: 'Chatbot created successfully', chatbot: cb});
         } catch(error){
             next(error);
@@ -18,6 +19,21 @@ class UserController{
         try{
             const list = await chatBotServices.listByOwner(req.user._id);
             res.status(200).json({status: true, chatbots: list});
+        } catch(error){
+            next(error);
+        }
+    }
+
+    async listQA(req,res,next){
+        try{
+            const {id} = req.params;
+            const {limit = 20, page = 1} = req.params;
+            const opts = {
+                limit: parseInt(limit),
+                skip: (parseInt(page) - 1) * parseInt(limit)}
+                console.log("Chatbot ID in controller:", id);
+            const list = await QAServices.listForChatbot( id, opts);
+            res.status(200).json({status: true, list});
         } catch(error){
             next(error);
         }

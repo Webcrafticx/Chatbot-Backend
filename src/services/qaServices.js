@@ -11,6 +11,7 @@ class QAServices {
         return await qaRepo.delete(id);
     }
     static async listForChatbot(ChatbotId){
+        console.log("Chatbot ID in service:", ChatbotId);
         return await qaRepo.findByChatbot(ChatbotId);
     }
     static async displayForChatbot(ChatbotId){
@@ -19,6 +20,9 @@ class QAServices {
     static async searchBestMatch(chatbotId, text) {
         return await qaRepo.searchBestMatch(chatbotId, text);
     }
+    // static async getAllQuestions(chatbotId){
+    //     return await qaRepo.findByChatbot(chatbotId, {limit: 0});
+    // }
 }
 
 module.exports = QAServices;

@@ -7,6 +7,9 @@ class VisitorService {
     static async visitorList(chatbot, opts = {}) {
         return await VisitorRepo.listByChatbot(chatbot, opts);
     }
+    static async update(id, status) {
+        return await VisitorRepo.update(id, status);
+    }
     static async delete(id) {
         return await VisitorRepo.delete(id);
     }

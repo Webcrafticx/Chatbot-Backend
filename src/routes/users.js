@@ -10,6 +10,7 @@ router.post('/chatbots', upload.single('logo'), userController.createChatbot);
 router.get('/chatbots', userController.listChatbots);
 
 router.post('/qa', userController.addQA);
+router.get('/get-all-qa/:id', userController.listQA);
 router.put('/qa/:id', userController.updateQA);
 router.delete('/qa/:id', userController.deleteQA);
 

@@ -15,6 +15,7 @@ class ChatController {
             next(error);
         }
     }
+
     async createMessage(req,res,next){
         try{
             const { slug } = req.params;
@@ -56,6 +57,21 @@ class ChatController {
             };
             const List = await VisitorService.visitorList(chatbot._id, opts);
             res.status(200).json({status: true, List});
+        } catch(error){
+            next(error);
+        }
+    }
+    async updateVistor(req,res,next){
+        try{
+            const {id} = req.params
+            const status = req.body;
+            if (!["solved", "unsolved"].includes(status)) {
+            throw new Error("Invalid status value");
+            }
+            // const chatbot = await chatBotServices.getBySlug(slug)
+            // if(!chatbot) throw new Error('Chatbot not found');
+            const query = await VisitorService.update(id, status)
+            res.status(200).json({status: true, message: 'user updated successfully', query});
         } catch(error){
             next(error);
         }

@@ -9,6 +9,16 @@ class admin {
             next(error);
         }
     }
+    async deleteUser(req,res){
+        try{
+            const {id} = req.params;
+            const user = await userServices.deleteUser(id);
+            res.status(200).json({status: true, message: 'User deleted successfully'})
+        }
+        catch(error){
+            next(error);
+        }
+    }
 }
 
 module.exports = new admin();

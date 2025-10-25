@@ -1,27 +1,29 @@
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const UP = process.env.UPLOAD_DIR || 'uploads';
-if (!fs.existsSync(UP)) fs.mkdirSync(UP, { recursive: true });
+require('dotenv').config();
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UP),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}-${Math.random().toString(36).slice(2,8)}${ext}`);
-  }
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+console.log(process.env.CLOUDINARY_CLOUD_NAME, process.env.CLOUDINARY_API_KEY, process.env.CLOUDINARY_API_SECRET);
+
+// Configure multer-storage-cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "chatbot_uploads", // Folder name in Cloudinary
+    allowed_formats: ["jpg", "jpeg", "png", "gif"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  },
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
-  fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|gif/;
-    const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mime = allowed.test(file.mimetype);
-    if (ext && mime) cb(null, true);
-    else cb(new Error('Invalid file type'));
-  }
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB
 });
 
 module.exports = upload;

@@ -7,6 +7,9 @@ class userServices{
     static async list(opts = {}){
         return await userRepo.list(opts);
     }
+    static async deleteUser(id){
+        return await userRepo.deleteById(id);
+    }
 }
 
 module.exports = userServices

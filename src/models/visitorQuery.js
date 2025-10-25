@@ -11,6 +11,7 @@ const VisitorQuerySchema = new mongoose.Schema({
   email: { type: String, required: true, index: true },
   phone: { type: String, required: true, index: true },
   message: { type: String, required: true },
+  status: {type: String, enum: ['unsolved', 'solved'], default: 'unsolved', index: true},
   // replied: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
