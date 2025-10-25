@@ -64,7 +64,8 @@ class ChatController {
     async updateVistor(req,res,next){
         try{
             const {id} = req.params
-            const status = req.body;
+            const {status} = req.body;
+            console.log(status);
             if (!["solved", "unsolved"].includes(status)) {
             throw new Error("Invalid status value");
             }
