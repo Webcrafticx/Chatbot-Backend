@@ -23,6 +23,12 @@ class ChatBotController {
             update[field] = req.body[field];
         }
         });
+        if (req.body.facebook || req.body.instagram || req.body.youtube) {
+      update.socialLinks = {};
+      if (req.body.facebook !== undefined) update.socialLinks.facebook = req.body.facebook;
+      if (req.body.instagram !== undefined) update.socialLinks.instagram = req.body.instagram;
+      if (req.body.youtube !== undefined) update.socialLinks.youtube = req.body.youtube;
+    }
  if (req.file) {
       update.logoUrl = req.file.path;        // secure URL from Cloudinary
       update.logoPublicId = req.file.filename; // public_id from Cloudinary
