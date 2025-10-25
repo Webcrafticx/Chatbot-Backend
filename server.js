@@ -11,6 +11,7 @@ const userRoute = require("./src/routes/users");
 const colors = require('colors');
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require('./swagger-output.json');
+const errorHandler = require('./src/middlewares/errorHandler');
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,8 @@ app.use("/api/admin/", adminRoutes)
 app.use("/api/chat/", chatRoute)
 app.use("/api/chatbot/", chatbotRoute)
 app.use("/api/user/", userRoute)
+
+app.use(errorHandler)
 //health check endpoint
 app.get('/api/health', (req,res) =>{
     res.status(200).json({status: 'Api is Running successfully', timestamp: new Date().toISOString()});   
