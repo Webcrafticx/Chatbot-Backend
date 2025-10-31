@@ -46,6 +46,9 @@ class QARepo {
    static async findByChatbotId(chatbotId) {
     return await QA.find({ chatbot: chatbotId });
   }
+  static async insertMany(qas) {
+    return await QA.insertMany(qas);
+  }
 }
 
 module.exports = QARepo;
