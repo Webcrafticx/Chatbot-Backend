@@ -22,6 +22,16 @@ const registerUserValidator = Joi.object({
   }),
 
   role: Joi.string().valid("user", "admin").default("user"),
+  durationInMonths: Joi.number().integer().min(1).required().messages({
+    "number.base": "Duration must be a number",
+    "number.min": "Duration must be at least 1 month",
+    "any.required": "Duration is required",
+  }),
+  amount: Joi.number().positive().required().messages({
+    "number.base": "Amount must be a number",
+    "number.positive": "Amount must be a positive number",
+    "any.required": "Amount is required",
+  }),
 });
 
 // -------------------------

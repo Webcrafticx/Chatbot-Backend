@@ -29,10 +29,17 @@ const chatBotSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    fallbackMessage: {
+    type: String,
+    default: 'Thanks for your message. Kindly submit this form and our executive will reach out as soon as possible.'
+  },
     socialLinks: {
     facebook: { type: String, default: "" },
     instagram: { type: String, default: "" },
-    youtube: { type: String, default: "" }
+    youtube: { type: String, default: "" },
+    whatsapp: { type: String, default: "" },
+    location: { type: String, default: "" },
+    website: { type: String, default: "" }
   },
     createdAt:{
         type: Date,

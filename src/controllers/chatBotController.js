@@ -16,7 +16,7 @@ class ChatBotController {
         const {id} = req.params
         console.log('File received:', req.file);
         console.log('Body received:', id);
-        const allowedFields = ['companyName', 'welcomeMessage', 'description'];
+        const allowedFields = ['companyName', 'welcomeMessage', 'description', 'fallbackMessage'];
         const update = {};
          allowedFields.forEach(field => {
         if (req.body[field] !== undefined) {

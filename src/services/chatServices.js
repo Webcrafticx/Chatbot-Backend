@@ -1,3 +1,4 @@
+const chatBotRepo = require("../repositories/chatBotRepo");
 const QAServices = require("./qaServices");
 
 class ChatServices {
@@ -8,10 +9,12 @@ class ChatServices {
       return { type: "answer", answer: match.answer, matchQA: match._id };
     }
     // await VisitorRepo.create({ chatbot: chatbot, message });
+      const chatbotData = await chatBotRepo.findById(chatbot);
+
     return {
       type: "fallback",
-      answer:
-        "Thanks for your message. Kindly submit this form and our executive will reach out as soon as possible.",
+      answer: chatbotData?.fallbackMessage || 
+        "Thanks for your message. Kindly submit this form and our executive will reach out as soon as possible."
     };
   }
 

@@ -43,6 +43,9 @@ class QARepo {
   static async delete(id) {
     return await QA.findByIdAndDelete(id);
   }
+   static async findByChatbotId(chatbotId) {
+    return await QA.find({ chatbot: chatbotId });
+  }
 }
 
 module.exports = QARepo;

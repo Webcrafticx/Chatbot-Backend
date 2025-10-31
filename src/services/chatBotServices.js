@@ -1,5 +1,7 @@
 const chatBotRepo = require('../repositories/chatBotRepo');
 const slugify = require('../utils/slugify');
+const qaRepo = require("../repositories/qaRepo");
+const predinedQA = require('../config/predinedQA');
 
 class chatBotServices {
     static validUrl(url) {
@@ -17,7 +19,7 @@ class chatBotServices {
     return url;
   }
     static async createChatBot(data){
-        const {ownerId, companyName, logoUrl, welcomeMessage, description, socialLinks} = data;
+        const {ownerId, companyName, logoUrl, welcomeMessage, description, fallbackMessage, socialLinks} = data;
         const slug = slugify(companyName);
         const existing = await chatBotRepo.findBySlug(slug);
         if(existing) throw new Error('Chatbot already exists with this name');
@@ -35,7 +37,19 @@ class chatBotServices {
       instagram: this.normalizeUrl(socialLinks.instagram),
       youtube: this.normalizeUrl(socialLinks.youtube),
     };
-        return await chatBotRepo.create({owner: ownerId, companyName, logoUrl, slug, welcomeMessage, description, socialLinks: normalizedLinks});
+        const chatBot =  await chatBotRepo.create({owner: ownerId, companyName, logoUrl, fallbackMessage, slug, welcomeMessage, description, socialLinks: normalizedLinks});
+        const existingQAs =  qaRepo.findByChatbotId(chatBot._id);
+        if (!existingQAs.length) {
+      const defaultQAs = predinedQA.map(item => ({
+        chatbot: chatBot._id,
+        question: item.question,
+        answer: item.answer,
+        isDisplay: true,
+      }));
+
+       qaRepo.insertMany(defaultQAs);
+    }
+    return chatBot;
     }
     static async updateChatBot(id, data){
         return await chatBotRepo.update(id, data);

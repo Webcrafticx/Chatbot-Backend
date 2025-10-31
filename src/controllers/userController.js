@@ -5,10 +5,10 @@ class UserController{
     async createChatbot(req,res,next){
         try{
             const ownerId = req.user._id;
-            const {companyName, welcomeMessage, description, facebook, instagram, youtube} = req.body;
+            const {companyName, welcomeMessage, description, facebook, fallbackMessage, instagram, youtube} = req.body;
             const logoUrl = req.file ? req.file.path : null;
             const logoPublicId = req.file ? req.file.filename : null;
-            const cb = await chatBotServices.createChatBot({ownerId, companyName, logoUrl, welcomeMessage, description, logoPublicId,socialLinks: {facebook, instagram, youtube}});
+            const cb = await chatBotServices.createChatBot({ownerId, companyName, logoUrl, fallbackMessage, welcomeMessage, description, logoPublicId,socialLinks: {facebook, instagram, youtube}});
             res.status(201).json({status: true, message: 'Chatbot created successfully', chatbot: cb});
         } catch(error){
             next(error);

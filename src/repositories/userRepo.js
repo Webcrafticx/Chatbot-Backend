@@ -6,6 +6,9 @@ class userRepo{
     static async findById(id){
         return await User.findById(id);
     }
+    static async updateById(id, update){
+        return await User.findByIdAndUpdate(id, update, {new: true});   
+    }
     static async findByEmail(email, includePassword = false) {
         if (includePassword) {
             return await User.findOne({ email }).select("+password");

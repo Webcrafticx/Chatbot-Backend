@@ -22,6 +22,16 @@ const userSchema = new mongoose.Schema({
         enum: ['user','admin'],
         default: 'user'
     },
+    subscription:{
+        plan: {type: String, default: 'monthly'},
+        durationInMonths: {type: Number, default: 1},
+        startDate: {type: Date, default: Date.now},
+        endDate: {type: Date},
+        amount: {type: Number},
+        status: {type: String, enum: ['active','expired'], default: 'active'},
+        paymentId: {type: String},
+        paymentMode: { type: String, enum: ['online', 'cash'], default: 'online' }
+    },
     createdAt: {
         type: Date,
         default: Date.now
